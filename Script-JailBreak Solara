@@ -1,0 +1,844 @@
+local CoreGui = game:GetService("CoreGui")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local Workspace = game:GetService("Workspace")
+
+if CoreGui:FindFirstChild("JailbreakUltimateHub") then
+    CoreGui.JailbreakUltimateHub:Destroy()
+end
+if CoreGui:FindFirstChild("JailbreakKeySystem") then
+    CoreGui.JailbreakKeySystem:Destroy()
+end
+if CoreGui:FindFirstChild("JailbreakAuthLog") then
+    CoreGui.JailbreakAuthLog:Destroy()
+end
+if CoreGui:FindFirstChild("JailbreakLogPassPrompt") then
+    CoreGui.JailbreakLogPassPrompt:Destroy()
+end
+
+local validKeys = {
+    ["ADMINLOG-WA03kla-PFL23FAL-Fl23da"] = 0,
+    ["K8F2-L9D3-Q4X7"] = 7776000,
+    ["P1Z6-M3A8-V9C2"] = 7776000,
+    ["T4Y7-R2U9-B6N1"] = 7776000,
+    ["X5C8-W1E4-H7J3"] = 7776000,
+    ["D9S2-F6G1-K3L8"] = 7776000,
+    ["A7Q4-Z1X9-V2B6"] = 7776000,
+    ["N3M8-C5V1-B7H2"] = 7776000,
+    ["U6I2-O9P4-T8R1"] = 7776000,
+    ["E5W9-Y3U7-I2O6"] = 7776000,
+    ["G1H4-J7K9-L2Z5"] = 7776000,
+    ["F3D8-S1A6-Q7W2"] = 7776000,
+    ["V4B9-N2M6-C1X8"] = 7776000,
+    ["R8T2-Y5U3-I7O1"] = 7776000,
+    ["L6K1-J3H9-G8F4"] = 7776000,
+    ["O2P7-A6S3-D9F1"] = 7776000,
+    ["Q5W8-E1R4-T2Y9"] = 7776000,
+    ["Z3X7-C9V2-B5N1"] = 7776000,
+    ["M4N8-B1V6-C3X9"] = 7776000,
+    ["Y7U2-I5O1-P8A4"] = 7776000,
+    ["H9J3-K6L2-Z7X5"] = 7776000,
+    ["ADMINKEY-F8G1-H4J9"] = 99999999999999999999999999999999999999,
+    ["ADMINKEY-T9Y1-U5I2"] = 99999999999999999999999999999999999999,
+    ["ADMINKEY-A2S7-D1F6"] = 99999999999999999999999999999999999999,
+    ["ADMINKEY-J8K4-L9Z3"] = 99999999999999999999999999999999999999,
+    ["ADMINKEY-V7B5-N1M8"] = 99999999999999999999999999999999999999,
+    ["ADMINKEY-E6R2-T8Y4"] = 99999999999999999999999999999999999999,
+    ["ADMINKEY-O3P6-A9S2"] = 99999999999999999999999999999999999999,
+    ["ADMINKEY-G2H5-J1K7"] = 99999999999999999999999999999999999999,
+    ["ADMINKEY-X4C6-V8B2"] = 99999999999999999999999999999999999999,
+    ["ADMINKEY-Q5W9-E3R6"] = 30,
+    ["T2Y8-U4I1-O7P5"] = 5184000,
+    ["A6S3-D7F9-G2H8"] = 5184000,
+    ["J5K1-L4Z8-X6C9"] = 5184000,
+    ["V8B2-N6M3-Q7W1"] = 5184000,
+    ["E9R4-T1Y6-U3I8"] = 5184000,
+    ["O7P2-A5S8-D4F9"] = 5184000,
+    ["G2H6-J9K3-L1Z7"] = 5184000,
+    ["X8C1-V3B7-N5M2"] = 5184000,
+    ["Q4W9-E2R8-T6Y1"] = 5184000,
+    ["U3I5-O7P9-A8S4"] = 5184000,
+    ["D1F6-G4H2-J8K5"] = 5184000,
+    ["L7Z2-X9C3-V1B6"] = 5184000,
+    ["N2M5-Q8W4-E7R9"] = 5184000,
+    ["T6Y1-U8I3-O2P7"] = 5184000,
+    ["A9S4-D2F5-G7H1"] = 5184000,
+    ["J8K3-L6Z1-X2C4"] = 5184000,
+    ["V1B7-N4M9-Q2W8"] = 5184000,
+    ["E2R6-T3Y5-U9I1"] = 5184000,
+    ["O8P4-A7S2-D6F3"] = 5184000,
+    ["G7H1-J5K8-L3Z9"] = 5184000,
+    ["X2C6-V4B1-N8M5"] = 5184000,
+    ["Q3W7-E9R1-T4Y6"] = 5184000,
+    ["U8I2-O6P3-A1S9"] = 5184000,
+    ["D7F3-G1H6-J2K8"] = 5184000,
+    ["L5Z1-X8C4-V9B2"] = 5184000,
+    ["N9M2-Q6W3-E5R7"] = 2592000,
+    ["T1Y4-U2I8-O9P6"] = 2592000,
+    ["A3S7-D1F4-G6H2"] = 2592000,
+    ["J2K6-L9Z3-X7C5"] = 2592000,
+    ["V5B1-N7M4-Q3W9"] = 2592000,
+    ["E6R1-T8Y2-U4I7"] = 2592000,
+    ["O1P3-A9S6-D8F2"] = 2592000,
+    ["G4H7-J2K5-L6Z1"] = 2592000,
+    ["X9C3-V1B8-N2M6"] = 2592000,
+    ["Q2W5-E7R4-T3Y8"] = 2592000,
+    ["U7I1-O2P5-A4S6"] = 2592000,
+    ["D8F2-G9H3-J6K1"] = 2592000,
+    ["L1Z4-X5C2-V7B8"] = 2592000,
+    ["N6M3-Q1W7-E8R2"] = 2592000,
+    ["T3Y6-U9I4-O1P8"] = 2592000,
+    ["A8S2-D3F6-G1H7"] = 2592000,
+    ["J7K4-L2Z5-X8C1"] = 2592000,
+    ["V2B6-N3M8-Q9W5"] = 2592000,
+    ["E7R2-T4Y8-U6I1"] = 2592000,
+    ["O9P5-A8S1-D2F7"] = 2592000,
+    ["G3H8-J1K6-L4Z2"] = 2592000,
+    ["X7C5-V9B3-N6M1"] = 2592000,
+    ["Q6W2-E4R7-T5Y3"] = 2592000,
+    ["U2I9-O1P4-A7S5"] = 2592000,
+    ["D3F7-G5H8-J9K2"] = 2592000,
+    ["L4Z8-X2C6-V1B7"] = 1209600,
+    ["N1M9-Q3W6-E2R5"] = 1209600,
+    ["T5Y2-U7I1-O3P4"] = 1209600,
+    ["A2S8-D9F3-G4H6"] = 1209600,
+    ["J9K5-L1Z7-X3C2"] = 1209600,
+    ["V3B8-N5M1-Q6W4"] = 1209600,
+    ["E8R3-T2Y7-U1I9"] = 1209600,
+    ["O2P6-A4S5-D7F8"] = 1209600,
+    ["G5H9-J3K1-L2Z6"] = 1209600,
+    ["X3C7-V6B4-N9M2"] = 1209600,
+    ["Q7W1-E5R9-T8Y2"] = 604800,
+    ["U9I4-O3P8-A6S1"] = 604800,
+    ["D2F5-G7H1-J4K9"] = 604800,
+    ["L8Z3-X1C9-V2B5"] = 604800,
+    ["N5M1-Q4W2-E6R8"] = 604800,
+    ["T7Y3-U1I6-O5P9"] = 604800,
+    ["A4S9-D8F2-G3H5"] = 604800,
+    ["J1K7-L3Z6-X9C8"] = 604800,
+    ["V9B5-N2M7-Q1W3"] = 604800,
+    ["E3R8-T6Y1-U2I4"] = 604800,
+    ["O6P9-A3S7-D5F1"] = 86400,
+    ["G8H2-J4K7-L1Z3"] = 86400,
+    ["X1C9-V2B6-N7M5"] = 86400,
+    ["Q8W4-E3R1-T9Y6"] = 86400,
+    ["U6I3-O8P2-A5S7"] = 86400,
+    ["D5F1-G6H9-J3K4"] = 43200,
+    ["L9Z7-X4C8-V6B2"] = 43200,
+    ["N8M4-Q2W1-E9R3"] = 43200,
+    ["T9Y6-U5I2-O4P1"] = 43200,
+    ["A1S5-D6F8-G9H3"] = 43200,
+}
+
+local function formatTime(seconds)
+    if seconds == 0 or seconds > 1000000000000 then return "Навсегда (Lifetime / Admin)" end
+    local days = math.floor(seconds / 86400)
+    local hours = math.floor((seconds % 86400) / 3600)
+    local minutes = math.floor((seconds % 3600) / 60)
+    
+    if days > 0 then
+        return string.format("%dд %dч", days, hours)
+    elseif hours > 0 then
+        return string.format("%dч %dм", hours, minutes)
+    else
+        return string.format("%dм", minutes)
+    end
+end
+
+local function promptAdminLogPassword(onSuccess)
+    if CoreGui:FindFirstChild("JailbreakLogPassPrompt") then
+        CoreGui.JailbreakLogPassPrompt:Destroy()
+    end
+
+    local PromptGui = Instance.new("ScreenGui")
+    PromptGui.Name = "JailbreakLogPassPrompt"
+    PromptGui.Parent = CoreGui
+    PromptGui.ResetOnSpawn = false
+
+    local Frame = Instance.new("Frame")
+    Frame.Parent = PromptGui
+    Frame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+    Frame.Position = UDim2.new(0.5, -140, 0.5, -90)
+    Frame.Size = UDim2.new(0, 280, 0, 160)
+    Frame.Active = true
+    Frame.Draggable = true
+    Instance.new("UICorner", Frame).CornerRadius = UDim.new(0, 8)
+
+    local Title = Instance.new("TextLabel")
+    Title.Parent = Frame
+    Title.BackgroundColor3 = Color3.fromRGB(40, 20, 20)
+    Title.Size = UDim2.new(1, 0, 0, 32)
+    Title.Font = Enum.Font.GothamBold
+    Title.Text = "🔒 Введите пароль от лога"
+    Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Title.TextSize = 11
+    Instance.new("UICorner", Title).CornerRadius = UDim.new(0, 8)
+
+    local TextBox = Instance.new("TextBox")
+    TextBox.Parent = Frame
+    TextBox.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+    TextBox.Position = UDim2.new(0, 15, 0, 48)
+    TextBox.Size = UDim2.new(1, -30, 0, 32)
+    TextBox.Font = Enum.Font.GothamSemibold
+    TextBox.PlaceholderText = "Пароль (ключ админ-лога)..."
+    TextBox.Text = ""
+    TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TextBox.TextSize = 11
+    Instance.new("UICorner", TextBox).CornerRadius = UDim.new(0, 4)
+
+    local Submit = Instance.new("TextButton")
+    Submit.Parent = Frame
+    Submit.BackgroundColor3 = Color3.fromRGB(120, 40, 40)
+    Submit.Position = UDim2.new(0, 15, 0, 88)
+    Submit.Size = UDim2.new(1, -30, 0, 28)
+    Submit.Font = Enum.Font.GothamBold
+    Submit.Text = "ПОДТВЕРДИТЬ"
+    Submit.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Submit.TextSize = 10
+    Instance.new("UICorner", Submit).CornerRadius = UDim.new(0, 4)
+
+    local Close = Instance.new("TextButton")
+    Close.Parent = Frame
+    Close.BackgroundColor3 = Color3.fromRGB(60, 60, 70)
+    Close.Position = UDim2.new(0, 15, 0, 122)
+    Close.Size = UDim2.new(1, -30, 0, 24)
+    Close.Font = Enum.Font.GothamSemibold
+    Close.Text = "Отмена"
+    Close.TextColor3 = Color3.fromRGB(200, 200, 200)
+    Close.TextSize = 10
+    Instance.new("UICorner", Close).CornerRadius = UDim.new(0, 4)
+
+    Close.MouseButton1Click:Connect(function()
+        PromptGui:Destroy()
+    end)
+
+    Submit.MouseButton1Click:Connect(function()
+        if TextBox.Text == "ADMINLOG-WA03kla-PFL23FAL-Fl23da" then
+            PromptGui:Destroy()
+            onSuccess()
+        else
+            TextBox.Text = ""
+            TextBox.PlaceholderText = "Неверный пароль!"
+        end
+    end)
+end
+
+local function runMainScript(expiryTime, usedKey)
+local isAdmin = (expiryTime == 0 or expiryTime > 1000000000000)
+local espCache = {}
+
+local function createDrawingESP(p)
+    if p == LocalPlayer then return end
+    local texts = {
+        name = Drawing.new("Text"),
+        info = Drawing.new("Text")
+    }
+    local tracer = Drawing.new("Line")
+    
+    for _, t in pairs(texts) do
+        t.Visible = false
+        t.Center = true
+        t.Outline = true
+        t.OutlineColor = Color3.fromRGB(0, 0, 0)
+        t.Font = 2
+        t.Size = 13
+    end
+    texts.name.Color = Color3.fromRGB(255, 255, 255)
+    
+    tracer.Visible = false
+    tracer.Thickness = 1.5
+    
+    espCache[p] = {texts = texts, tracer = tracer}
+end
+
+for _, p in pairs(Players:GetPlayers()) do createDrawingESP(p) end
+Players.PlayerAdded:Connect(createDrawingESP)
+Players.PlayerRemoving:Connect(function(p)
+    if espCache[p] then
+        espCache[p].texts.name:Remove()
+        espCache[p].texts.info:Remove()
+        espCache[p].tracer:Remove()
+        espCache[p] = nil
+    end
+end)
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "JailbreakUltimateHub"
+ScreenGui.Parent = CoreGui
+ScreenGui.ResetOnSpawn = false
+
+local Frame = Instance.new("Frame")
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+Frame.Position = UDim2.new(0.5, -175, 0.5, -220)
+Frame.Size = UDim2.new(0, 350, 0, 540)
+Frame.Active = true
+Frame.Draggable = true
+
+local FrameCorner = Instance.new("UICorner")
+FrameCorner.CornerRadius = UDim.new(0, 8)
+FrameCorner.Parent = Frame
+
+local Title = Instance.new("TextLabel")
+Title.Parent = Frame
+Title.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+Title.Size = UDim2.new(1, 0, 0, 35)
+Title.Font = Enum.Font.GothamBold
+Title.Text = isAdmin and "🛡️ Jailbreak Ultimate Hub [ADMIN]" or "✨ Jailbreak Ultimate Hub ✨"
+Title.TextColor3 = isAdmin and Color3.fromRGB(255, 100, 100) or Color3.fromRGB(255, 255, 255)
+Title.TextSize = 13
+
+local TitleCorner = Instance.new("UICorner")
+TitleCorner.CornerRadius = UDim.new(0, 8)
+TitleCorner.Parent = Title
+
+local CloseBtn = Instance.new("TextButton")
+CloseBtn.Parent = Title
+CloseBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+CloseBtn.Position = UDim2.new(1, -28, 0.5, -10)
+CloseBtn.Size = UDim2.new(0, 20, 0, 20)
+CloseBtn.Font = Enum.Font.GothamBold
+CloseBtn.Text = "X"
+CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.TextSize = 10
+Instance.new("UICorner", CloseBtn).CornerRadius = UDim.new(0, 4)
+
+local MinimizeBtn = Instance.new("TextButton")
+MinimizeBtn.Parent = Title
+MinimizeBtn.BackgroundColor3 = Color3.fromRGB(200, 150, 50)
+MinimizeBtn.Position = UDim2.new(1, -54, 0.5, -10)
+MinimizeBtn.Size = UDim2.new(0, 20, 0, 20)
+MinimizeBtn.Font = Enum.Font.GothamBold
+MinimizeBtn.Text = "-"
+MinimizeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+MinimizeBtn.TextSize = 10
+Instance.new("UICorner", MinimizeBtn).CornerRadius = UDim.new(0, 4)
+
+local Container = Instance.new("ScrollingFrame")
+Container.Parent = Frame
+Container.BackgroundTransparency = 1
+Container.Position = UDim2.new(0, 0, 0, 40)
+Container.Size = UDim2.new(1, 0, 1, -40)
+Container.CanvasSize = UDim2.new(0, 0, 0, 760)
+Container.ScrollBarThickness = 4
+
+local List = Instance.new("UIListLayout")
+List.Parent = Container
+List.SortOrder = Enum.SortOrder.LayoutOrder
+List.Padding = UDim.new(0, 6)
+
+local Padding = Instance.new("UIPadding")
+Padding.Parent = Container
+Padding.PaddingTop = UDim.new(0, 5)
+Padding.PaddingLeft = UDim.new(0, 10)
+Padding.PaddingRight = UDim.new(0, 10)
+
+local LogGui, LogScroll
+if isAdmin then
+    LogGui = Instance.new("ScreenGui")
+    LogGui.Name = "JailbreakAuthLog"
+    LogGui.Parent = CoreGui
+    LogGui.ResetOnSpawn = false
+    LogGui.Enabled = false
+
+    local LogFrame = Instance.new("Frame")
+    LogFrame.Parent = LogGui
+    LogFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+    LogFrame.Position = UDim2.new(0.5, -200, 0.5, -175)
+    LogFrame.Size = UDim2.new(0, 400, 0, 350)
+    LogFrame.Active = true
+    LogFrame.Draggable = true
+    Instance.new("UICorner", LogFrame).CornerRadius = UDim.new(0, 8)
+
+    local LogTitle = Instance.new("TextLabel")
+    LogTitle.Parent = LogFrame
+    LogTitle.BackgroundColor3 = Color3.fromRGB(35, 20, 20)
+    LogTitle.Size = UDim2.new(1, 0, 0, 35)
+    LogTitle.Font = Enum.Font.GothamBold
+    LogTitle.Text = "📋 Лог входов и оставшегося времени"
+    LogTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+    LogTitle.TextSize = 12
+    Instance.new("UICorner", LogTitle).CornerRadius = UDim.new(0, 8)
+
+    local LogClose = Instance.new("TextButton")
+    LogClose.Parent = LogTitle
+    LogClose.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+    LogClose.Position = UDim2.new(1, -28, 0.5, -10)
+    LogClose.Size = UDim2.new(0, 20, 0, 20)
+    LogClose.Font = Enum.Font.GothamBold
+    LogClose.Text = "X"
+    LogClose.TextColor3 = Color3.fromRGB(255, 255, 255)
+    LogClose.TextSize = 10
+    Instance.new("UICorner", LogClose).CornerRadius = UDim.new(0, 4)
+
+    LogClose.MouseButton1Click:Connect(function()
+        LogGui.Enabled = false
+    end)
+
+    local LogMenuBtn = Instance.new("TextButton")
+    LogMenuBtn.Parent = Container
+    LogMenuBtn.BackgroundColor3 = Color3.fromRGB(70, 30, 30)
+    LogMenuBtn.Size = UDim2.new(1, 0, 0, 35)
+    LogMenuBtn.Font = Enum.Font.GothamBold
+    LogMenuBtn.Text = "📋 ОТКРЫТЬ АДМИН-ЛОГ"
+    LogMenuBtn.TextColor3 = Color3.fromRGB(255, 200, 200)
+    LogMenuBtn.TextSize = 11
+    Instance.new("UICorner", LogMenuBtn).CornerRadius = UDim.new(0, 4)
+
+    LogMenuBtn.MouseButton1Click:Connect(function()
+        promptAdminLogPassword(function()
+            LogGui.Enabled = not LogGui.Enabled
+        end)
+    end)
+
+    Title.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton2 then
+            promptAdminLogPassword(function()
+                LogGui.Enabled = not LogGui.Enabled
+            end)
+        end
+    end)
+
+    LogScroll = Instance.new("ScrollingFrame")
+    LogScroll.Parent = LogFrame
+    LogScroll.BackgroundTransparency = 1
+    LogScroll.Position = UDim2.new(0, 10, 0, 45)
+    LogScroll.Size = UDim2.new(1, -20, 1, -55)
+    LogScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+    LogScroll.ScrollBarThickness = 4
+
+    local LogListLayout = Instance.new("UIListLayout")
+    LogListLayout.Parent = LogScroll
+    LogListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    LogListLayout.Padding = UDim.new(0, 4)
+
+    LogListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+        LogScroll.CanvasSize = UDim2.new(0, 0, 0, LogListLayout.AbsoluteContentSize.Y + 10)
+    end)
+
+    local function addLogEntry(playerName, timeRemainingStr)
+        local entry = Instance.new("TextLabel")
+        entry.Parent = LogScroll
+        entry.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+        entry.Size = UDim2.new(1, 0, 0, 28)
+        entry.Font = Enum.Font.GothamSemibold
+        entry.Text = "  " .. playerName .. " | Осталось: " .. timeRemainingStr
+        entry.TextColor3 = Color3.fromRGB(200, 255, 200)
+        entry.TextSize = 10
+        entry.TextXAlignment = Enum.TextXAlignment.Left
+        Instance.new("UICorner", entry).CornerRadius = UDim.new(0, 4)
+    end
+
+    local timeStr = "Навсегда (Lifetime / Admin)"
+    addLogEntry(LocalPlayer.Name, timeStr)
+end
+
+local minimized = false
+MinimizeBtn.MouseButton1Click:Connect(function()
+    minimized = not minimized
+    Container.Visible = not minimized
+    Frame.Size = minimized and UDim2.new(0, 350, 0, 35) or UDim2.new(0, 350, 0, 540)
+end)
+
+CloseBtn.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
+    if LogGui then LogGui:Destroy() end
+end)
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if not gameProcessed and (input.KeyCode == Enum.KeyCode.K or input.KeyCode == Enum.KeyCode.Insert) then
+        ScreenGui.Enabled = not ScreenGui.Enabled
+    end
+end)
+
+local function addToggleWithBind(text, defaultKey, callback)
+    local btn = Instance.new("TextButton")
+    btn.Parent = Container
+    btn.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
+    btn.Size = UDim2.new(1, 0, 0, 32)
+    btn.Font = Enum.Font.GothamSemibold
+    btn.Text = text .. " [OFF]"
+    btn.TextColor3 = Color3.fromRGB(200, 200, 200)
+    btn.TextSize = 11
+    btn.TextXAlignment = Enum.TextXAlignment.Left
+    
+    local paddingLeft = Instance.new("UIPadding")
+    paddingLeft.Parent = btn
+    paddingLeft.PaddingLeft = UDim.new(0, 10)
+    
+    local c = Instance.new("UICorner")
+    c.CornerRadius = UDim.new(0, 4)
+    c.Parent = btn
+    
+    local bindBtn = Instance.new("TextButton")
+    bindBtn.Parent = btn
+    bindBtn.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
+    bindBtn.Position = UDim2.new(1, -75, 0.5, -11)
+    bindBtn.Size = UDim2.new(0, 65, 0, 22)
+    bindBtn.Font = Enum.Font.GothamBold
+    bindBtn.Text = "[" .. defaultKey.Name .. "]"
+    bindBtn.TextColor3 = Color3.fromRGB(150, 150, 255)
+    bindBtn.TextSize = 10
+    Instance.new("UICorner", bindBtn).CornerRadius = UDim.new(0, 4)
+    
+    local state = false
+    local currentKey = defaultKey
+    local binding = false
+    
+    local function toggleState()
+        state = not state
+        btn.Text = text .. " [" .. (state and "ON" or "OFF") .. "]"
+        btn.TextColor3 = state and Color3.fromRGB(100, 255, 100) or Color3.fromRGB(200, 200, 200)
+        btn.BackgroundColor3 = state and Color3.fromRGB(20, 50, 30) or Color3.fromRGB(35, 35, 45)
+        callback(state)
+    end
+    
+    btn.MouseButton1Click:Connect(function()
+        if not binding then toggleState() end
+    end)
+    
+    bindBtn.MouseButton1Click:Connect(function()
+        binding = true
+        bindBtn.Text = "[...]"
+    end)
+    
+    UserInputService.InputBegan:Connect(function(input, gameProcessed)
+        if binding and input.UserInputType == Enum.UserInputType.Keyboard then
+            currentKey = input.KeyCode
+            bindBtn.Text = "[" .. currentKey.Name .. "]"
+            binding = false
+        elseif not gameProcessed and input.KeyCode == currentKey and not binding then
+            toggleState()
+        end
+    end)
+    
+    return {set = toggleState, getState = function() return state end}
+end
+
+local function addSlider(text, min, max, default, callback)
+    local container = Instance.new("Frame")
+    container.Parent = Container
+    container.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+    container.Size = UDim2.new(1, 0, 0, 42)
+    
+    local c = Instance.new("UICorner")
+    c.CornerRadius = UDim.new(0, 4)
+    c.Parent = container
+    
+    local label = Instance.new("TextLabel")
+    label.Parent = container
+    label.BackgroundTransparency = 1
+    label.Position = UDim2.new(0, 8, 0, 4)
+    label.Size = UDim2.new(1, -16, 0, 16)
+    label.Font = Enum.Font.GothamSemibold
+    label.Text = text .. ": " .. tostring(default)
+    label.TextColor3 = Color3.fromRGB(255, 255, 255)
+    label.TextSize = 11
+    label.TextXAlignment = Enum.TextXAlignment.Left
+    
+    local sliderBar = Instance.new("Frame")
+    sliderBar.Parent = container
+    sliderBar.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
+    sliderBar.Position = UDim2.new(0, 8, 0, 24)
+    sliderBar.Size = UDim2.new(1, -16, 0, 6)
+    
+    local barC = Instance.new("UICorner")
+    barC.CornerRadius = UDim.new(0, 3)
+    barC.Parent = sliderBar
+    
+    local sliderFill = Instance.new("Frame")
+    sliderFill.Parent = sliderBar
+    sliderFill.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
+    sliderFill.Size = UDim2.new(math.clamp((default - min) / (max - min), 0, 1), 0, 1, 0)
+    
+    local fillC = Instance.new("UICorner")
+    fillC.CornerRadius = UDim.new(0, 3)
+    fillC.Parent = sliderFill
+    
+    local dragging = false
+    sliderBar.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then dragging = true end
+    end)
+    UserInputService.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then dragging = false end
+    end)
+    UserInputService.InputChanged:Connect(function(input)
+        if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+            local mousePos = UserInputService:GetMouseLocation().X
+            local barPos = sliderBar.AbsolutePosition.X
+            local barSize = sliderBar.AbsoluteSize.X
+            local percent = math.clamp((mousePos - barPos) / barSize, 0, 1)
+            local value = math.floor(min + (max - min) * percent + 0.5)
+            sliderFill.Size = UDim2.new(percent, 0, 1, 0)
+            label.Text = text .. ": " .. tostring(value)
+            callback(value)
+        end
+    end)
+end
+
+local function isEnemy(player)
+    if player == LocalPlayer then return false end
+    if LocalPlayer.Team and player.Team then
+        return player.Team ~= LocalPlayer.Team
+    end
+    return true
+end
+
+local function getClosestEnemy()
+    local myRoot = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    if not myRoot then return nil end
+    local target, minDist = nil, math.huge
+    for _, p in pairs(Players:GetPlayers()) do
+        if isEnemy(p) and p.Character then
+            local root = p.Character:FindFirstChild("HumanoidRootPart")
+            local hum = p.Character:FindFirstChildOfClass("Humanoid")
+            if root and hum and hum.Health > 0 then
+                local dist = (myRoot.Position - root.Position).Magnitude
+                if dist < minDist then
+                    minDist = dist
+                    target = p
+                end
+            end
+        end
+    end
+    return target
+end
+
+local espActive = false
+local tracersActive = false
+local speedActive = false
+local speedMultiplier = 15
+local flyActive = false
+local flySpeed = 40
+local bodyVelocity, bodyGyro
+local aimbotActive = false
+local killauraActive = false
+
+addToggleWithBind("ESP ([P/J], ХП, Дист)", Enum.KeyCode.X, function(state) espActive = state end)
+addToggleWithBind("Tracers (Линии)", Enum.KeyCode.C, function(state) tracersActive = state end)
+addToggleWithBind("SpeedHack", Enum.KeyCode.E, function(state) speedActive = state end)
+addSlider("Speed Multiplier", 1, 5, 2, function(val) speedMultiplier = val * 10 end)
+
+addToggleWithBind("Fly (Полёт)", Enum.KeyCode.F, function(state)
+    flyActive = state
+    local char = LocalPlayer.Character
+    local root = char and char:FindFirstChild("HumanoidRootPart")
+    if flyActive and root then
+        bodyVelocity = Instance.new("BodyVelocity", root)
+        bodyVelocity.MaxForce = Vector3.new(30000, 30000, 30000)
+        bodyVelocity.Velocity = Vector3.new(0, 0, 0)
+        
+        bodyGyro = Instance.new("BodyGyro", root)
+        bodyGyro.MaxTorque = Vector3.new(30000, 30000, 30000)
+        bodyGyro.CFrame = root.CFrame
+    else
+        if bodyVelocity then bodyVelocity:Destroy() end
+        if bodyGyro then bodyGyro:Destroy() end
+    end
+end)
+addSlider("Fly Speed", 20, 100, 40, function(val) flySpeed = val end)
+
+addToggleWithBind("Aimbot (Только враги)", Enum.KeyCode.Q, function(state) aimbotActive = state end)
+addToggleWithBind("Killaura (Только враги)", Enum.KeyCode.R, function(state) killauraActive = state end)
+
+if expiryTime > 0 and expiryTime < 1000000000000 then
+    task.spawn(function()
+        while task.wait(1) do
+            if os.time() >= expiryTime then
+                ScreenGui:Destroy()
+                if LogGui then LogGui:Destroy() end
+                break
+            end
+        end
+    end)
+end
+
+RunService.RenderStepped:Connect(function()
+    local cam = Workspace.CurrentCamera
+    local myRoot = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    
+    for p, data in pairs(espCache) do
+        local texts = data.texts
+        local tracer = data.tracer
+        local char = p.Character
+        local root = char and char:FindFirstChild("HumanoidRootPart")
+        local hum = char and char:FindFirstChildOfClass("Humanoid")
+        
+        local show = espActive and char and root and hum and hum.Health > 0 and myRoot
+        
+        if show then
+            local pos, onScreen = cam:WorldToViewportPoint(root.Position + Vector3.new(0, 2.5, 0))
+            if onScreen then
+                local teamText = "[J]"
+                local teamColor = Color3.fromRGB(255, 60, 60)
+                if p.Team and (p.Team.Name:lower():find("police") or p.Team.Name:lower():find("коп") or p.Team.Name:lower():find("полиц")) then
+                    teamText = "[P]"
+                    teamColor = Color3.fromRGB(60, 150, 255)
+                end
+                
+                local dist = math.floor((myRoot.Position - root.Position).Magnitude)
+                local hp = math.floor(hum.Health)
+                
+                texts.name.Text = teamText .. " " .. p.Name
+                texts.name.Position = Vector2.new(pos.X, pos.Y - 15)
+                texts.name.Color = teamColor
+                texts.name.Visible = true
+                
+                texts.info.Text = "HP: " .. hp .. " | Dist: " .. dist .. "m"
+                texts.info.Position = Vector2.new(pos.X, pos.Y)
+                texts.info.Color = Color3.fromRGB(0, 255, 100)
+                texts.info.Visible = true
+            else
+                texts.name.Visible = false
+                texts.info.Visible = false
+            end
+        else
+            texts.name.Visible = false
+            texts.info.Visible = false
+        end
+        
+        if tracersActive and char and root and hum and hum.Health > 0 and myRoot then
+            local pos, onScreen = cam:WorldToViewportPoint(root.Position)
+            if onScreen then
+                tracer.From = Vector2.new(cam.ViewportSize.X / 2, cam.ViewportSize.Y)
+                tracer.To = Vector2.new(pos.X, pos.Y)
+                tracer.Color = (p.Team and (p.Team.Name:lower():find("police") or p.Team.Name:lower():find("коп"))) and Color3.fromRGB(60, 150, 255) or Color3.fromRGB(255, 60, 60)
+                tracer.Visible = true
+            else
+                tracer.Visible = false
+            end
+        else
+            tracer.Visible = false
+        end
+    end
+end)
+
+RunService.RenderStepped:Connect(function(dt)
+    if speedActive and LocalPlayer.Character then
+        local hum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+        local root = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+        if hum and root and hum.MoveDirection.Magnitude > 0 then
+            root.CFrame = root.CFrame + (hum.MoveDirection * (speedMultiplier / 10) * dt * 15)
+        end
+    end
+end)
+
+RunService.RenderStepped:Connect(function()
+    if flyActive and bodyVelocity and bodyGyro and LocalPlayer.Character then
+        local root = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+        local cam = Workspace.CurrentCamera
+        if root then
+            bodyGyro.CFrame = cam.CFrame
+            local move = Vector3.new()
+            if UserInputService:IsKeyDown(Enum.KeyCode.W) then move = move + cam.CFrame.LookVector end
+            if UserInputService:IsKeyDown(Enum.KeyCode.S) then move = move - cam.CFrame.LookVector end
+            if UserInputService:IsKeyDown(Enum.KeyCode.D) then move = move + cam.CFrame.RightVector end
+            if UserInputService:IsKeyDown(Enum.KeyCode.A) then move = move - cam.CFrame.RightVector end
+            bodyVelocity.Velocity = move * flySpeed
+        end
+    end
+    
+    if aimbotActive then
+        local target = getClosestEnemy()
+        if target and target.Character and target.Character:FindFirstChild("Head") then
+            Workspace.CurrentCamera.CFrame = CFrame.new(Workspace.CurrentCamera.CFrame.Position, target.Character.Head.Position)
+        end
+    end
+end)
+
+task.spawn(function()
+    while task.wait(0.2) do
+        if killauraActive then
+            pcall(function()
+                local myRoot = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                local target = getClosestEnemy()
+                if myRoot and target and target.Character then
+                    local root = target.Character:FindFirstChild("HumanoidRootPart")
+                    local hum = target.Character:FindFirstChildOfClass("Humanoid")
+                    if root and hum and (myRoot.Position - root.Position).Magnitude < 25 then
+                        hum:TakeDamage(15)
+                    end
+                end
+            end)
+        end
+    end
+end)
+
+end
+
+local KeyGui = Instance.new("ScreenGui")
+KeyGui.Name = "JailbreakKeySystem"
+KeyGui.Parent = CoreGui
+KeyGui.ResetOnSpawn = false
+
+local KeyFrame = Instance.new("Frame")
+KeyFrame.Parent = KeyGui
+KeyFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+KeyFrame.Position = UDim2.new(0.5, -150, 0.5, -100)
+KeyFrame.Size = UDim2.new(0, 300, 0, 180)
+KeyFrame.Active = true
+KeyFrame.Draggable = true
+Instance.new("UICorner", KeyFrame).CornerRadius = UDim.new(0, 8)
+
+local Title = Instance.new("TextLabel")
+Title.Parent = KeyFrame
+Title.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+Title.Size = UDim2.new(1, 0, 0, 35)
+Title.Font = Enum.Font.GothamBold
+Title.Text = "🔑 Key System (Admin Log)"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextSize = 13
+Instance.new("UICorner", Title).CornerRadius = UDim.new(0, 8)
+
+local TextBox = Instance.new("TextBox")
+TextBox.Parent = KeyFrame
+TextBox.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+TextBox.Position = UDim2.new(0, 15, 0, 55)
+TextBox.Size = UDim2.new(1, -30, 0, 35)
+TextBox.Font = Enum.Font.GothamSemibold
+TextBox.PlaceholderText = "Введите ключ..."
+TextBox.Text = ""
+TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextBox.TextSize = 11
+Instance.new("UICorner", TextBox).CornerRadius = UDim.new(0, 4)
+
+local SubmitBtn = Instance.new("TextButton")
+SubmitBtn.Parent = KeyFrame
+SubmitBtn.BackgroundColor3 = Color3.fromRGB(40, 120, 60)
+SubmitBtn.Position = UDim2.new(0, 15, 0, 100)
+SubmitBtn.Size = UDim2.new(1, -30, 0, 32)
+SubmitBtn.Font = Enum.Font.GothamBold
+SubmitBtn.Text = "ПРОВЕРИТЬ КЛЮЧ"
+SubmitBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+SubmitBtn.TextSize = 11
+Instance.new("UICorner", SubmitBtn).CornerRadius = UDim.new(0, 4)
+
+local Status = Instance.new("TextLabel")
+Status.Parent = KeyFrame
+Status.BackgroundTransparency = 1
+Status.Position = UDim2.new(0, 15, 0, 145)
+Status.Size = UDim2.new(1, -30, 0, 20)
+Status.Font = Enum.Font.GothamSemibold
+Status.Text = "Статус: Ожидание ввода..."
+Status.TextColor3 = Color3.fromRGB(150, 150, 150)
+Status.TextSize = 10
+
+SubmitBtn.MouseButton1Click:Connect(function()
+    local inputKey = TextBox.Text
+    local duration = validKeys[inputKey]
+    if duration then
+        Status.Text = "Статус: Ключ верный! (" .. formatTime(duration) .. ")"
+        Status.TextColor3 = Color3.fromRGB(100, 255, 100)
+        
+        local expiryTime = (duration == 0) and 0 or (duration > 1000000000000 and duration or (os.time() + duration))
+        
+        task.wait(0.8)
+        KeyGui:Destroy()
+        runMainScript(expiryTime, inputKey)
+    else
+        Status.Text = "Статус: Неверный или истекший ключ!"
+        Status.TextColor3 = Color3.fromRGB(255, 60, 60)
+    end
+end)
