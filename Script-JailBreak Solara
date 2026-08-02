@@ -321,7 +321,7 @@ Container.Parent = Frame
 Container.BackgroundTransparency = 1
 Container.Position = UDim2.new(0, 0, 0, 40)
 Container.Size = UDim2.new(1, 0, 1, -40)
-Container.CanvasSize = UDim2.new(0, 0, 0, 760)
+Container.CanvasSize = UDim2.new(0, 0, 0, 840)
 Container.ScrollBarThickness = 4
 
 local List = Instance.new("UIListLayout")
@@ -615,6 +615,8 @@ local flySpeed = 40
 local bodyVelocity, bodyGyro
 local aimbotActive = false
 local killauraActive = false
+local arrestAuraActive = false
+local arrestRange = 15
 
 addToggleWithBind("ESP ([P/J], ХП, Дист)", Enum.KeyCode.X, function(state) espActive = state end)
 addToggleWithBind("Tracers (Линии)", Enum.KeyCode.C, function(state) tracersActive = state end)
@@ -642,6 +644,9 @@ addSlider("Fly Speed", 20, 100, 40, function(val) flySpeed = val end)
 
 addToggleWithBind("Aimbot (Только враги)", Enum.KeyCode.Q, function(state) aimbotActive = state end)
 addToggleWithBind("Killaura (Только враги)", Enum.KeyCode.R, function(state) killauraActive = state end)
+
+addToggleWithBind("Arrest Aura", Enum.KeyCode.T, function(state) arrestAuraActive = state end)
+addSlider("Arrest Range", 5, 15, 15, function(val) arrestRange = val end)
 
 if expiryTime > 0 and expiryTime < 1000000000000 then
     task.spawn(function()
@@ -759,6 +764,33 @@ task.spawn(function()
                     local hum = target.Character:FindFirstChildOfClass("Humanoid")
                     if root and hum and (myRoot.Position - root.Position).Magnitude < 25 then
                         hum:TakeDamage(15)
+                    end
+                end
+            end)
+        end
+    end
+end)
+
+-- Логика Arrest Aura для Jailbreak (арест преступников в радиусе)
+task.spawn(function()
+    while task.wait(0.3) do
+        if arrestAuraActive then
+            pcall(function()
+                local myRoot = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                if myRoot then
+                    for _, p in pairs(Players:GetPlayers()) do
+                        if p ~= LocalPlayer and p.Character then
+                            local root = p.Character:FindFirstChild("HumanoidRootPart")
+                            if root and (myRoot.Position - root.Position).Magnitude <= arrestRange then
+                                -- Проверяем, является ли игрок преступником/криминалом и может ли игра выполнить арест
+                                local remote = ReplicatedStorage:FindFirstChild("Event", true) or Workspace:FindFirstChild("Police", true)
+                                -- Использование стандартных событий ареста Jailbreak, если они доступны в окружении
+                                local arrestRemote = ReplicatedStorage:FindFirstChild("Arrest", true) or (Remotes and Remotes.Arrest)
+                                if arrestRemote then
+                                    arrestRemote:FireServer(p)
+                                end
+                            end
+                        end
                     end
                 end
             end)
