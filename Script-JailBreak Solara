@@ -4,6 +4,7 @@ local LocalPlayer = Players.LocalPlayer
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 local Workspace = game:GetService("Workspace")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 if CoreGui:FindFirstChild("JailbreakUltimateHub") then
     CoreGui.JailbreakUltimateHub:Destroy()
@@ -606,6 +607,29 @@ local function getClosestEnemy()
     return target
 end
 
+local function getClosestCriminal()
+    local myRoot = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    if not myRoot then return nil end
+    local target, minDist = nil, 15
+    for _, p in pairs(Players:GetPlayers()) do
+        if p ~= LocalPlayer and p.Character then
+            local isCop = p.Team and (p.Team.Name:lower():find("police") or p.Team.Name:lower():find("коп") or p.Team.Name:lower():find("полиц"))
+            if not isCop then
+                local root = p.Character:FindFirstChild("HumanoidRootPart")
+                local hum = p.Character:FindFirstChildOfClass("Humanoid")
+                if root and hum and hum.Health > 0 then
+                    local dist = (myRoot.Position - root.Position).Magnitude
+                    if dist <= minDist then
+                        minDist = dist
+                        target = p
+                    end
+                end
+            end
+        end
+    end
+    return target
+end
+
 local espActive = false
 local tracersActive = false
 local speedActive = false
@@ -771,24 +795,24 @@ task.spawn(function()
     end
 end)
 
--- Логика Arrest Aura для Jailbreak (арест преступников в радиусе)
 task.spawn(function()
-    while task.wait(0.3) do
+    while task.wait(0.2) do
         if arrestAuraActive then
             pcall(function()
-                local myRoot = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                local char = LocalPlayer.Character
+                local myRoot = char and char:FindFirstChild("HumanoidRootPart")
                 if myRoot then
-                    for _, p in pairs(Players:GetPlayers()) do
-                        if p ~= LocalPlayer and p.Character then
-                            local root = p.Character:FindFirstChild("HumanoidRootPart")
-                            if root and (myRoot.Position - root.Position).Magnitude <= arrestRange then
-                                -- Проверяем, является ли игрок преступником/криминалом и может ли игра выполнить арест
-                                local remote = ReplicatedStorage:FindFirstChild("Event", true) or Workspace:FindFirstChild("Police", true)
-                                -- Использование стандартных событий ареста Jailbreak, если они доступны в окружении
-                                local arrestRemote = ReplicatedStorage:FindFirstChild("Arrest", true) or (Remotes and Remotes.Arrest)
-                                if arrestRemote then
-                                    arrestRemote:FireServer(p)
-                                end
+                    local target = getClosestCriminal()
+                    if target and target.Character then
+                        local targetRoot = target.Character:FindFirstChild("HumanoidRootPart")
+                        if targetRoot and (myRoot.Position - targetRoot.Position).Magnitude <= arrestRange then
+                            myRoot.CFrame = CFrame.new(myRoot.Position, Vector3.new(targetRoot.Position.X, myRoot.Position.Y, targetRoot.Position.Z))
+                            
+                            local remotesFolder = ReplicatedStorage:FindFirstChild("Remotes")
+                            if remotesFolder and remotesFolder:FindFirstChild("Arrest") then
+                                remotesFolder.Arrest:FireServer(target)
+                            elseif ReplicatedStorage:FindFirstChild("Arrest") then
+                                ReplicatedStorage.Arrest:FireServer(target)
                             end
                         end
                     end
