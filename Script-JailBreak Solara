@@ -4,7 +4,6 @@ local LocalPlayer = Players.LocalPlayer
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 local Workspace = game:GetService("Workspace")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 if CoreGui:FindFirstChild("JailbreakUltimateHub") then
     CoreGui.JailbreakUltimateHub:Destroy()
@@ -51,87 +50,27 @@ local validKeys = {
     ["ADMINKEY-G2H5-J1K7"] = 99999999999999999999999999999999999999,
     ["ADMINKEY-X4C6-V8B2"] = 99999999999999999999999999999999999999,
     ["ADMINKEY-Q5W9-E3R6"] = 30,
-    ["T2Y8-U4I1-O7P5"] = 5184000,
-    ["A6S3-D7F9-G2H8"] = 5184000,
-    ["J5K1-L4Z8-X6C9"] = 5184000,
-    ["V8B2-N6M3-Q7W1"] = 5184000,
-    ["E9R4-T1Y6-U3I8"] = 5184000,
-    ["O7P2-A5S8-D4F9"] = 5184000,
-    ["G2H6-J9K3-L1Z7"] = 5184000,
-    ["X8C1-V3B7-N5M2"] = 5184000,
-    ["Q4W9-E2R8-T6Y1"] = 5184000,
-    ["U3I5-O7P9-A8S4"] = 5184000,
-    ["D1F6-G4H2-J8K5"] = 5184000,
-    ["L7Z2-X9C3-V1B6"] = 5184000,
-    ["N2M5-Q8W4-E7R9"] = 5184000,
-    ["T6Y1-U8I3-O2P7"] = 5184000,
-    ["A9S4-D2F5-G7H1"] = 5184000,
-    ["J8K3-L6Z1-X2C4"] = 5184000,
-    ["V1B7-N4M9-Q2W8"] = 5184000,
-    ["E2R6-T3Y5-U9I1"] = 5184000,
-    ["O8P4-A7S2-D6F3"] = 5184000,
-    ["G7H1-J5K8-L3Z9"] = 5184000,
-    ["X2C6-V4B1-N8M5"] = 5184000,
-    ["Q3W7-E9R1-T4Y6"] = 5184000,
-    ["U8I2-O6P3-A1S9"] = 5184000,
-    ["D7F3-G1H6-J2K8"] = 5184000,
-    ["L5Z1-X8C4-V9B2"] = 5184000,
-    ["N9M2-Q6W3-E5R7"] = 2592000,
-    ["T1Y4-U2I8-O9P6"] = 2592000,
-    ["A3S7-D1F4-G6H2"] = 2592000,
-    ["J2K6-L9Z3-X7C5"] = 2592000,
-    ["V5B1-N7M4-Q3W9"] = 2592000,
-    ["E6R1-T8Y2-U4I7"] = 2592000,
-    ["O1P3-A9S6-D8F2"] = 2592000,
-    ["G4H7-J2K5-L6Z1"] = 2592000,
-    ["X9C3-V1B8-N2M6"] = 2592000,
-    ["Q2W5-E7R4-T3Y8"] = 2592000,
-    ["U7I1-O2P5-A4S6"] = 2592000,
-    ["D8F2-G9H3-J6K1"] = 2592000,
-    ["L1Z4-X5C2-V7B8"] = 2592000,
-    ["N6M3-Q1W7-E8R2"] = 2592000,
-    ["T3Y6-U9I4-O1P8"] = 2592000,
-    ["A8S2-D3F6-G1H7"] = 2592000,
-    ["J7K4-L2Z5-X8C1"] = 2592000,
-    ["V2B6-N3M8-Q9W5"] = 2592000,
-    ["E7R2-T4Y8-U6I1"] = 2592000,
-    ["O9P5-A8S1-D2F7"] = 2592000,
-    ["G3H8-J1K6-L4Z2"] = 2592000,
-    ["X7C5-V9B3-N6M1"] = 2592000,
-    ["Q6W2-E4R7-T5Y3"] = 2592000,
-    ["U2I9-O1P4-A7S5"] = 2592000,
-    ["D3F7-G5H8-J9K2"] = 2592000,
-    ["L4Z8-X2C6-V1B7"] = 1209600,
-    ["N1M9-Q3W6-E2R5"] = 1209600,
-    ["T5Y2-U7I1-O3P4"] = 1209600,
-    ["A2S8-D9F3-G4H6"] = 1209600,
-    ["J9K5-L1Z7-X3C2"] = 1209600,
-    ["V3B8-N5M1-Q6W4"] = 1209600,
-    ["E8R3-T2Y7-U1I9"] = 1209600,
-    ["O2P6-A4S5-D7F8"] = 1209600,
-    ["G5H9-J3K1-L2Z6"] = 1209600,
-    ["X3C7-V6B4-N9M2"] = 1209600,
-    ["Q7W1-E5R9-T8Y2"] = 604800,
-    ["U9I4-O3P8-A6S1"] = 604800,
-    ["D2F5-G7H1-J4K9"] = 604800,
-    ["L8Z3-X1C9-V2B5"] = 604800,
-    ["N5M1-Q4W2-E6R8"] = 604800,
-    ["T7Y3-U1I6-O5P9"] = 604800,
-    ["A4S9-D8F2-G3H5"] = 604800,
-    ["J1K7-L3Z6-X9C8"] = 604800,
-    ["V9B5-N2M7-Q1W3"] = 604800,
-    ["E3R8-T6Y1-U2I4"] = 604800,
-    ["O6P9-A3S7-D5F1"] = 86400,
-    ["G8H2-J4K7-L1Z3"] = 86400,
-    ["X1C9-V2B6-N7M5"] = 86400,
-    ["Q8W4-E3R1-T9Y6"] = 86400,
-    ["U6I3-O8P2-A5S7"] = 86400,
-    ["D5F1-G6H9-J3K4"] = 43200,
-    ["L9Z7-X4C8-V6B2"] = 43200,
-    ["N8M4-Q2W1-E9R3"] = 43200,
-    ["T9Y6-U5I2-O4P1"] = 43200,
-    ["A1S5-D6F8-G9H3"] = 43200,
 }
+
+local friendsList = {}
+
+local function cleanName(str)
+    if not str then return "" end
+    str = str:gsub("^@", "")
+    return str:lower():gsub("%s+", "")
+end
+
+local function isFriend(player)
+    if not player then return false end
+    local pName = cleanName(player.Name)
+    local pDisplay = cleanName(player.DisplayName)
+    for friend, _ in pairs(friendsList) do
+        if friend == pName or friend == pDisplay then
+            return true
+        end
+    end
+    return false
+end
 
 local function formatTime(seconds)
     if seconds == 0 or seconds > 1000000000000 then return "Навсегда (Lifetime / Admin)" end
@@ -273,7 +212,7 @@ ScreenGui.ResetOnSpawn = false
 local Frame = Instance.new("Frame")
 Frame.Parent = ScreenGui
 Frame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
-Frame.Position = UDim2.new(0.5, -175, 0.5, -220)
+Frame.Position = UDim2.new(0.5, -175, 0.5, -240)
 Frame.Size = UDim2.new(0, 350, 0, 540)
 Frame.Active = true
 Frame.Draggable = true
@@ -322,7 +261,7 @@ Container.Parent = Frame
 Container.BackgroundTransparency = 1
 Container.Position = UDim2.new(0, 0, 0, 40)
 Container.Size = UDim2.new(1, 0, 1, -40)
-Container.CanvasSize = UDim2.new(0, 0, 0, 840)
+Container.CanvasSize = UDim2.new(0, 0, 0, 880)
 Container.ScrollBarThickness = 4
 
 local List = Instance.new("UIListLayout")
@@ -335,6 +274,88 @@ Padding.Parent = Container
 Padding.PaddingTop = UDim.new(0, 5)
 Padding.PaddingLeft = UDim.new(0, 10)
 Padding.PaddingRight = UDim.new(0, 10)
+
+local FriendsHeader = Instance.new("TextLabel")
+FriendsHeader.Parent = Container
+FriendsHeader.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+FriendsHeader.Size = UDim2.new(1, 0, 0, 25)
+FriendsHeader.Font = Enum.Font.GothamBold
+FriendsHeader.Text = "👥 Управление друзьями (Whitelist)"
+FriendsHeader.TextColor3 = Color3.fromRGB(100, 255, 100)
+FriendsHeader.TextSize = 11
+Instance.new("UICorner", FriendsHeader).CornerRadius = UDim.new(0, 4)
+
+local FriendInput = Instance.new("TextBox")
+FriendInput.Parent = Container
+FriendInput.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+FriendInput.Size = UDim2.new(1, 0, 0, 30)
+FriendInput.Font = Enum.Font.GothamSemibold
+FriendInput.PlaceholderText = "Ник или @юзер друга..."
+FriendInput.Text = ""
+FriendInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+FriendInput.TextSize = 11
+Instance.new("UICorner", FriendInput).CornerRadius = UDim.new(0, 4)
+
+local FriendAddBtn = Instance.new("TextButton")
+FriendAddBtn.Parent = Container
+FriendAddBtn.BackgroundColor3 = Color3.fromRGB(40, 120, 60)
+FriendAddBtn.Size = UDim2.new(1, 0, 0, 28)
+FriendAddBtn.Font = Enum.Font.GothamBold
+FriendAddBtn.Text = "ДОБАВИТЬ ДРУГА"
+FriendAddBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+FriendAddBtn.TextSize = 10
+Instance.new("UICorner", FriendAddBtn).CornerRadius = UDim.new(0, 4)
+
+local FriendDelBtn = Instance.new("TextButton")
+FriendDelBtn.Parent = Container
+FriendDelBtn.BackgroundColor3 = Color3.fromRGB(120, 40, 40)
+FriendDelBtn.Size = UDim2.new(1, 0, 0, 28)
+FriendDelBtn.Font = Enum.Font.GothamBold
+FriendDelBtn.Text = "УДАЛИТЬ ДРУГА"
+FriendDelBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+FriendDelBtn.TextSize = 10
+Instance.new("UICorner", FriendDelBtn).CornerRadius = UDim.new(0, 4)
+
+local FriendsStatus = Instance.new("TextLabel")
+FriendsStatus.Parent = Container
+FriendsStatus.BackgroundTransparency = 1
+FriendsStatus.Size = UDim2.new(1, 0, 0, 20)
+FriendsStatus.Font = Enum.Font.GothamSemibold
+FriendsStatus.Text = "Список друзей пуст"
+FriendsStatus.TextColor3 = Color3.fromRGB(150, 150, 150)
+FriendsStatus.TextSize = 10
+
+local function updateFriendsStatus()
+    local count = 0
+    local names = {}
+    for name, _ in pairs(friendsList) do
+        count = count + 1
+        table.insert(names, name)
+    end
+    if count == 0 then
+        FriendsStatus.Text = "Список друзей пуст"
+    else
+        FriendsStatus.Text = "Друзья (" .. count .. "): " .. table.concat(names, ", ")
+    end
+end
+
+FriendAddBtn.MouseButton1Click:Connect(function()
+    local cleaned = cleanName(FriendInput.Text)
+    if cleaned ~= "" then
+        friendsList[cleaned] = true
+        FriendInput.Text = ""
+        updateFriendsStatus()
+    end
+end)
+
+FriendDelBtn.MouseButton1Click:Connect(function()
+    local cleaned = cleanName(FriendInput.Text)
+    if cleaned ~= "" then
+        friendsList[cleaned] = nil
+        FriendInput.Text = ""
+        updateFriendsStatus()
+    end
+end)
 
 local LogGui, LogScroll
 if isAdmin then
@@ -580,7 +601,8 @@ local function addSlider(text, min, max, default, callback)
 end
 
 local function isEnemy(player)
-    if player == LocalPlayer then return false end
+    if not player or player == LocalPlayer then return false end
+    if isFriend(player) then return false end -- Друзья строго игнорируются для аимбота и киллауры
     if LocalPlayer.Team and player.Team then
         return player.Team ~= LocalPlayer.Team
     end
@@ -607,29 +629,6 @@ local function getClosestEnemy()
     return target
 end
 
-local function getClosestCriminal()
-    local myRoot = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-    if not myRoot then return nil end
-    local target, minDist = nil, 15
-    for _, p in pairs(Players:GetPlayers()) do
-        if p ~= LocalPlayer and p.Character then
-            local isCop = p.Team and (p.Team.Name:lower():find("police") or p.Team.Name:lower():find("коп") or p.Team.Name:lower():find("полиц"))
-            if not isCop then
-                local root = p.Character:FindFirstChild("HumanoidRootPart")
-                local hum = p.Character:FindFirstChildOfClass("Humanoid")
-                if root and hum and hum.Health > 0 then
-                    local dist = (myRoot.Position - root.Position).Magnitude
-                    if dist <= minDist then
-                        minDist = dist
-                        target = p
-                    end
-                end
-            end
-        end
-    end
-    return target
-end
-
 local espActive = false
 local tracersActive = false
 local speedActive = false
@@ -639,10 +638,8 @@ local flySpeed = 40
 local bodyVelocity, bodyGyro
 local aimbotActive = false
 local killauraActive = false
-local arrestAuraActive = false
-local arrestRange = 15
 
-addToggleWithBind("ESP ([P/J], ХП, Дист)", Enum.KeyCode.X, function(state) espActive = state end)
+addToggleWithBind("ESP ([P/J/F], ХП, Дист)", Enum.KeyCode.X, function(state) espActive = state end)
 addToggleWithBind("Tracers (Линии)", Enum.KeyCode.C, function(state) tracersActive = state end)
 addToggleWithBind("SpeedHack", Enum.KeyCode.E, function(state) speedActive = state end)
 addSlider("Speed Multiplier", 1, 5, 2, function(val) speedMultiplier = val * 10 end)
@@ -666,11 +663,8 @@ addToggleWithBind("Fly (Полёт)", Enum.KeyCode.F, function(state)
 end)
 addSlider("Fly Speed", 20, 100, 40, function(val) flySpeed = val end)
 
-addToggleWithBind("Aimbot (Только враги)", Enum.KeyCode.Q, function(state) aimbotActive = state end)
+addToggleWithBind("Aimbot (Мягкий навод)", Enum.KeyCode.Q, function(state) aimbotActive = state end)
 addToggleWithBind("Killaura (Только враги)", Enum.KeyCode.R, function(state) killauraActive = state end)
-
-addToggleWithBind("Arrest Aura", Enum.KeyCode.T, function(state) arrestAuraActive = state end)
-addSlider("Arrest Range", 5, 15, 15, function(val) arrestRange = val end)
 
 if expiryTime > 0 and expiryTime < 1000000000000 then
     task.spawn(function()
@@ -702,7 +696,12 @@ RunService.RenderStepped:Connect(function()
             if onScreen then
                 local teamText = "[J]"
                 local teamColor = Color3.fromRGB(255, 60, 60)
-                if p.Team and (p.Team.Name:lower():find("police") or p.Team.Name:lower():find("коп") or p.Team.Name:lower():find("полиц")) then
+                
+                -- Жесткая проверка: друг всегда отображается зеленым цветом с префиксом [F]
+                if isFriend(p) then
+                    teamText = "[F]"
+                    teamColor = Color3.fromRGB(0, 255, 0)
+                elseif p.Team and (p.Team.Name:lower():find("police") or p.Team.Name:lower():find("коп") or p.Team.Name:lower():find("полиц")) then
                     teamText = "[P]"
                     teamColor = Color3.fromRGB(60, 150, 255)
                 end
@@ -733,7 +732,11 @@ RunService.RenderStepped:Connect(function()
             if onScreen then
                 tracer.From = Vector2.new(cam.ViewportSize.X / 2, cam.ViewportSize.Y)
                 tracer.To = Vector2.new(pos.X, pos.Y)
-                tracer.Color = (p.Team and (p.Team.Name:lower():find("police") or p.Team.Name:lower():find("коп"))) and Color3.fromRGB(60, 150, 255) or Color3.fromRGB(255, 60, 60)
+                if isFriend(p) then
+                    tracer.Color = Color3.fromRGB(0, 255, 0)
+                else
+                    tracer.Color = (p.Team and (p.Team.Name:lower():find("police") or p.Team.Name:lower():find("коп"))) and Color3.fromRGB(60, 150, 255) or Color3.fromRGB(255, 60, 60)
+                end
                 tracer.Visible = true
             else
                 tracer.Visible = false
@@ -772,7 +775,9 @@ RunService.RenderStepped:Connect(function()
     if aimbotActive then
         local target = getClosestEnemy()
         if target and target.Character and target.Character:FindFirstChild("Head") then
-            Workspace.CurrentCamera.CFrame = CFrame.new(Workspace.CurrentCamera.CFrame.Position, target.Character.Head.Position)
+            local cam = Workspace.CurrentCamera
+            local targetCFrame = CFrame.new(cam.CFrame.Position, target.Character.Head.Position)
+            cam.CFrame = cam.CFrame:Lerp(targetCFrame, 0.15)
         end
     end
 end)
@@ -788,33 +793,6 @@ task.spawn(function()
                     local hum = target.Character:FindFirstChildOfClass("Humanoid")
                     if root and hum and (myRoot.Position - root.Position).Magnitude < 25 then
                         hum:TakeDamage(15)
-                    end
-                end
-            end)
-        end
-    end
-end)
-
-task.spawn(function()
-    while task.wait(0.2) do
-        if arrestAuraActive then
-            pcall(function()
-                local char = LocalPlayer.Character
-                local myRoot = char and char:FindFirstChild("HumanoidRootPart")
-                if myRoot then
-                    local target = getClosestCriminal()
-                    if target and target.Character then
-                        local targetRoot = target.Character:FindFirstChild("HumanoidRootPart")
-                        if targetRoot and (myRoot.Position - targetRoot.Position).Magnitude <= arrestRange then
-                            myRoot.CFrame = CFrame.new(myRoot.Position, Vector3.new(targetRoot.Position.X, myRoot.Position.Y, targetRoot.Position.Z))
-                            
-                            local remotesFolder = ReplicatedStorage:FindFirstChild("Remotes")
-                            if remotesFolder and remotesFolder:FindFirstChild("Arrest") then
-                                remotesFolder.Arrest:FireServer(target)
-                            elseif ReplicatedStorage:FindFirstChild("Arrest") then
-                                ReplicatedStorage.Arrest:FireServer(target)
-                            end
-                        end
                     end
                 end
             end)
